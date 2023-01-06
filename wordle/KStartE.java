@@ -34,6 +34,7 @@ public class KStartE extends WordleMemo {
         return h;
     }
 
+    // the smaller the better!
     public double entropy(HashMap<?, ? extends List<?>> h) {
         double d = 0;
         for (Object x: h.keySet()) {
@@ -43,38 +44,45 @@ public class KStartE extends WordleMemo {
         return d;
     }
 
-    @Override
-    public List<String> succ(List<String> l, int t) {
+    // Not overriding
+    public List<String> succ(String ss, int t) {
         int x = this.allowed.size();
-        int y = ans.size();
+        // int y = this.ans.size();
 
         List<Pair<String, Double>> groups = new ArrayList<>();
         for (int i = 0; i < x; i++) {
             String s = this.allowed.get(i);
-            HashMap<Integer, List<String>> h = this.check(s, l);
-            if (h.size() == y) {
-                return List.of(s);
+            HashMap<Long, List<String>> h;
+            if (ss != "") {
+                h = this.check(ss + "," + s);
+            } else {
+                h = this.check(s);
             }
+            
+            // if (h.size() == y) {
+            //     return List.of(s);
+            // }
             groups.add(new Pair<>(s, this.entropy(h)));            
         }
 
         Collections.sort(groups, (z, zz) -> {
             // return zz.getSnd() - z.getSnd();
             if (zz.getSnd() > z.getSnd()) {
-                return 1;
+                return -1;
             }
-            return -1;
+            return 1;
         });
 
-        // 5 is a magic number, change if needed
-        // return 6 (0-indexed) + ties
+
         double threshold = groups.get(Math.min(t, groups.size() - 1)).getSnd();
         List<String> li = new ArrayList<>();
         int i = 0;
-        while (i < x && groups.get(i).getSnd() >= threshold) {
+        while (i < x && groups.get(i).getSnd() <= threshold) {
             li.add(groups.get(i).getFst());
             i++;
         }
+
+        // System.out.println(li);
 
         return li;
     }
@@ -84,59 +92,40 @@ public class KStartE extends WordleMemo {
     // How to account for solve?
     // Recursively divide by 243 and sth sth modify LOL
     public List<String> start(int ... breadth) {
-        int sz = this.allowed.size();
         if (breadth.length > this.k) {
             throw new IllegalArgumentException("Too many arguments, require <= this.k arguments");
         }
 
         List<String> ans = new ArrayList<>();
+        ans.add("");
         for (int i = 0; i < this.k; i++) {
-            if (i == 0) {
-                if (breadth.length > 0) {
-                    ans = this.succ(this.ans, breadth[0]);
-                } else {
-                    ans = this.succ(this.ans, 1);
-                }
-                
+            List<String> temp = new ArrayList<>();
+            int m;
+            if (breadth.length <= i) {
+                m = 1;
             } else {
-                List<String> ll = new ArrayList<>();
-                for (String s: ans) {
-                    List<Pair<String, Integer>> l = new ArrayList<>();
-                    for (int j = 0; j < this.allowed.size(); j++) {
-                        String temp = s + "," + this.allowed.get(j);
-                        int size = this.check(temp).size();
-                        l.add(new Pair<>(temp, size));
+                m = breadth[i];
+            }
+            for (String s: ans) {
+                List<String> l = this.succ(s, m);
+                for (String ss: l) {
+                    if (s != "") {
+                        temp.add(s + "," + ss);
+                    } else {
+                        temp.add(ss);
                     }
                     
-                    Collections.sort(l, (z, zz) -> {
-                        return zz.getSnd() - z.getSnd();
-                    });
-
-
-                    int m;
-                    if (breadth.length > i) {
-                        m = breadth[i];
-                    } else {
-                        m = 1;
-                    }
-                    int threshold = l.get(Math.min(m, l.size() - 1)).getSnd();
-                    List<String> li = new ArrayList<>();
-                    int j = 0;
-                    while (j < sz && l.get(j).getSnd() >= threshold) {
-                        li.add(l.get(j).getFst());
-                        j++;
-                    }
-            
-                    ll.addAll(li);
-                } 
-                ans = ll;               
-            }                                          
+                }
+            }
+            // System.out.println(temp);
+            ans = temp;
         }
         return ans;
     }
 
     public Pair<Tree<String, Long>, Integer> solve(int w, int ... breadth) {
         List<String> starts = this.start(breadth);
+        // System.out.println(starts);
         Pair<Tree<String, Long>, Integer> p = starts.stream().map(x -> this.miniSolveMemo(x, w)).parallel()
         .reduce(new Pair<Tree<String, Long>, Integer>
         (null, Integer.MAX_VALUE), (z, aa) -> (z.getSnd() < aa.getSnd()) ? z : aa);

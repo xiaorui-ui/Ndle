@@ -17,13 +17,13 @@ public class KStartTest extends Test {
     List<String> l3 = Constants.l3;
     List<String> fiveAns = Constants.fiveAns;
     List<String> fiveAllowed = Constants.fiveAllowed;
-    KStart k = new KStart(fiveAllowed, fiveAns, 5, 2);
+    KStartE k = new KStartE(fiveAllowed, fiveAns, 5, 3);
 
     @Override
     public void run() {
         super.test(() -> {
             // System.out.println(k.solve(5, 5, 5));
-            Pair<Tree<String, Long>, Integer> p = k.solve(5, 5, 5);
+            Pair<Tree<String, Long>, Integer> p = k.solve(5, 5, 5, 5);
             System.out.println(p);
             // System.out.println(WordleMemo.print(p.getFst()));
             // System.out.println(p.getFst().deepest());
