@@ -1,0 +1,31 @@
+Wordle.java:
+
+Returning int[] for compare() method doesn't work as the hashkeys are different, for containsKey().
+Using Integer works as you're comparing the hashkeys of the int, not the Integer.
+
+For solve() method, make sure your candidate list is shrinking, else there's an infinite loop. Hashset
+is more efficient than HashMap to count distinct elements.
+
+Class methods are removed as they are just slower than instance methods(through thorough testing).
+
+Ndle:
+Consider splitting up the test cases for each function up into separate files.
+
+Extensions:
+Dordle and above
+Very ambitious, but at each stage if you pick a random top based on some criteria the computation time may still be managable.
+
+The reason why it's so slow is because once 1 word is solved it goes back to the Wordle solve method, which is pretty darn slow but high accuracy. 
+And it's especially slow when the word lists get large(> 10, when it can't be instantly solved).
+(I think, and the threshold is ~250-275 words)
+In order to make it fast you should override that method also, so that the time complexity is n instead of n*log(n)
+
+DordleGeneric is too ambitious, perhaps start from WordleGeneric first LOL
+
+k-start
+
+Hard-mode
+
+4-solve???
+
+
