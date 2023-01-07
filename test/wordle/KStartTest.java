@@ -23,7 +23,7 @@ public class KStartTest extends Test {
     public void run() {
         super.test(() -> {
             // System.out.println(k.solve(5, 5, 5));
-            Pair<Tree<String, Long>, Integer> p = k.solve(5, 5, 5, 5);
+            Pair<Tree<String, Long>, Integer> p = k.solve(5, 3, 10, 10);
             System.out.println(p);
             // System.out.println(WordleMemo.print(p.getFst()));
             // System.out.println(p.getFst().deepest());
