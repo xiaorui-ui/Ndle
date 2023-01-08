@@ -235,7 +235,7 @@ public class Wordle {
 
     
     // for de-bugging
-    public void print(List<String> ans) {
+    public void print(List<String> ans, int k) {
         int x = allowed.size();
 
         List<Pair<String, Integer>> groups = new ArrayList<>();
@@ -250,7 +250,7 @@ public class Wordle {
             return zz.getSnd() - z.getSnd();
         });
 
-        for (int i = 0; i < Math.min(x, 100); i++) {
+        for (int i = 0; i < Math.min(x, k); i++) {
             System.out.println(groups.get(i));
         }
         

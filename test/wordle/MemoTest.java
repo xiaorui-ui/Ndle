@@ -22,13 +22,13 @@ public class MemoTest extends Test {
         WordleMemo w2 = new WordleMemo(Constants.fiveAllowed, Constants.fiveAns, 5);
         WordleMemo w3 = new WordleMemo(l3, l3, 5);
         System.out.println(w1.solve(l1, 5));
-        System.out.println(w3.solve(l3, 5).getFst().get((long)234).toString() + w3.solve(l3, 5));
+        System.out.println(w3.solve(l3, 5).getFst().get(234).toString() + w3.solve(l3, 5));
         // w2.print(Constants.fiveAns);
         // new Wordle(Constants.fiveAllowed, Constants.fiveAns, 5).print(Constants.fiveAns);
         super.test(
             () -> {
                 // WordleMemo w = new WordleMemo(Constants.nyt, Constants.nytAllowed, 5);
-                Pair<Tree<String, Long>, Integer> p = w2.solve(Constants.fiveAns, 5);
+                Pair<NestedMap<Integer, String, List<String>>, Integer> p = w2.solve(Constants.fiveAns, 5);
                 System.out.println(p);
                 // System.out.println(WordleMemo.print(p.getFst()));
                 // System.out.println(p.getFst().deepest());
