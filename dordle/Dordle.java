@@ -127,6 +127,8 @@ public class Dordle extends Wordle {
                 // The minisolve will reference !this solve method instead!
                 // sum += super.miniSolve(word, ans) - ans.size();
                 for (int j : h.keySet()) {
+                    // consider re-writing the method for this class as it is too slow!
+                    // it's using Wordle's implementation, which is okay for 1 word, but not for 2
                     sum += super.solve(h.get(j), 1).getSnd();
                 }
                 // System.out.println(sum);

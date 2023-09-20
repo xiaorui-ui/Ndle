@@ -14,9 +14,9 @@ public class WordleRun {
 
         // new SpeedTest().run();
 
-        // new MemoTest().run();
+        new MemoTest().run();
         
-        new KStartTest().run();
+        // new KStartTest().run();
     }
     
 }

@@ -10,6 +10,7 @@ import test.*;
 
 public class Ndle {
     public static void main(String[] args) {
+        System.out.println("Processing power: " + Runtime.getRuntime().availableProcessors());
         new WordleRun().run();
         
         // Path out = Paths.get("output.txt");

@@ -25,7 +25,7 @@ public class KStartTest extends Test {
         super.test(() -> {
             // System.out.println(k.solve(5, 5, 5));
             Pair<NestedMap<Integer, String, List<String>>, Integer> p = k.solve(5, 
-            Functions.sizeNested, 10, 10);
+            Functions.sizeNested, 1, 1);
             System.out.println(p);
 
             // to print the output to output.txt

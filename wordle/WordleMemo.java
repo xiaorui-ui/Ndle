@@ -28,16 +28,16 @@ public class WordleMemo extends Wordle {
     public Pair<NestedMap<Integer, String, List<String>>, Integer> solve(List<String> ans, int x) {
         int y = ans.size();
         if (y < 3) {
-            if (y == 2) {
-                NestedMap<Integer, String, List<String>> nm = this.solve(ans.subList(0, 1), x).getFst();
-                nm.put(this.compare.get(ans.get(0)).get(ans.get(1)),
-                 this.solve(ans.subList(1, 2), x).getFst());
-                return new Pair<>(nm, 3);
+            NestedMap<Integer, String, List<String>> nm = new NestedMap<>(ans.get(0), List.of(ans.get(0)));
+            nm.put(c, null);
+            if (y == 1) {
+                return new Pair<>(nm, 1);
             }
-            NestedMap<Integer, String, List<String>> nm = new NestedMap<>(ans.get(0), null);
-            nm.put((int) Math.pow(3, this.l) - 1, null);
-            return new Pair<>(nm, 1);
-            
+            NestedMap<Integer, String, List<String>> nm2 = new NestedMap<>(ans.get(1), ans);
+            nm2.put(this.compare.get(ans.get(1)).get(ans.get(0)),
+             nm);
+            nm2.put(c, null);
+            return new Pair<>(nm2, 3);
         }
         
         if (y < 20) {
@@ -92,6 +92,7 @@ public class WordleMemo extends Wordle {
         // HashMap<Integer, List<String>> h = p.getSnd(); // alt
 
         NestedMap<Integer, String, List<String>> nm = new NestedMap<>(s, null);
+        nm.setW(l);
 
         if (h.size() == 1) {
             return new Pair<>(null, Integer.MAX_VALUE);
@@ -100,6 +101,8 @@ public class WordleMemo extends Wordle {
             Pair<NestedMap<Integer, String, List<String>>, Integer> p1 = this.solve(h.get(j), x);
             sum += p1.getSnd();
             nm.put(j, p1.getFst());
+            // initialise the lists for everything
+            nm.get(j).setW(h.get(j));
         }
 
         sum += l.size();
