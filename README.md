@@ -9,7 +9,7 @@ Below are screenshots of some code from Wordle.java, which is written in Java:
   <img src="compare_test.png" alt="Alt text">
   <figcaption>Sample Test Case</figcaption>
   <img src="compare.png" alt="Alt text">
-  <figcaption>Function that returns the output of comparing 2 strings</figcaption>
+  <figcaption>Function that returns the output of comparing 2 strings.</figcaption>
 </figure>
 
 
