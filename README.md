@@ -18,19 +18,19 @@ Below are screenshots of some code from Wordle.java, which is written in Java. S
 
 To run the app locally, [clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository) the repo and make sure you have Java 17 or above on your local machine. 
 
-The entire application is written in Java and meant to be run in the command line. There are 2 main ways to use the application; the first is to run the main function in Ndle.java. You can compile the java files in each sub-folder(javac path/to/file/*.java, e.g. javac Ndle.java or javac wordle/*.java), or use Intellij and simply run Ndle.java.
+The entire application is written in Java and meant to be run in the command line. There are 2 main ways to use the application; the first is to run the main function in Ndle.java. You can compile the java files in each sub-folder(`javac path/to/file/*.java`, e.g. `javac Ndle.java` or `javac wordle/*.java`), or use Intellij and simply run Ndle.java. You can easily modify the test Java class files and Ndle.java to change what you want to test.
 
 <figure>
   <figcaption>Sample run:</figcaption>
   <img src="command_line.png" alt="Alt text">
 </figure>
 
-The second is to use jshell. The advantage of this method is that you can go into the sub-branches of the decision tree by using tree.get(x), where x is an integer that represents the outcome. The convention I chose is to represent black, yellow, and green with 0, 1, and 2 respectively. Then, read the digits from the right to left(instead of the usual left to right for implementation simplicity) as an number in base-3.
+The second is to use jshell. The advantage of this method is that you can go into the sub-branches of the decision tree by using tree.get(x), where x is an integer that represents the outcome. The convention I chose is to represent black, yellow, and green with 0, 1, and 2 respectively. Then, read the digits from the right to left(instead of the usual left to right for implementation simplicity) as an number in base-3(see code fragment above).
 
 <figure>
   <figcaption>Sample run:</figcaption>
   <img src="jshell_1.png" alt="Alt text">
-  <figcaption>Sample run for sub-branches, import classes if necessary! 7920 represents minimum total tries needed across all words. </figcaption>
+  <figcaption>Sample run for sub-branches, import classes if necessary! 7920 represents minimum total tries needed across all words. Here: </figcaption>
   <img src="jshell_2.png" alt="Alt text">
   
 </figure>
