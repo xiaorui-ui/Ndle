@@ -37,17 +37,18 @@ public class Dordle extends Wordle {
                     max = h.size();
                     ans = new ArrayList<>();
                 }
-                ans.add(s);                
+                ans.add(s);
             }
         }
         return ans;
     }
 
     // When the sets are disjoint
-    // It's highly improbable that a trial word can completely separate 2 sets so we ignore that possibility here
+    // It's highly improbable that a trial word can completely separate 2 sets so we
+    // ignore that possibility here
     public List<String> succ(List<String> l1, List<String> l2) {
 
-        this.count += 1;        
+        this.count += 1;
 
         int x = this.allowed.size();
         int max = 0;
@@ -61,7 +62,7 @@ public class Dordle extends Wordle {
             int prod = h1.size() * h2.size();
             if (prod >= max) {
                 // can abstract out this part also
-                if (prod == y*z) {
+                if (prod == y * z) {
                     return List.of(s);
                 }
                 if (prod != max) {
@@ -77,7 +78,7 @@ public class Dordle extends Wordle {
     public Pair<?, Integer> solve(List<String> l) {
         int x = l.size();
         if (x <= 2) {
-            return new Pair<>(l.get(0), 2*x - 2);
+            return new Pair<>(l.get(0), 2 * x - 2);
         }
         // happy case
         if (x < 20) {
@@ -92,32 +93,32 @@ public class Dordle extends Wordle {
                     ans = w;
                 }
             }
-            if (min <= 2*x*(x - 1)/2) {
-                return new Pair<>(ans, min + x*(x - 1)/2);
-            }                      
+            if (min <= 2 * x * (x - 1) / 2) {
+                return new Pair<>(ans, min + x * (x - 1) / 2);
+            }
         }
         List<String> succ = this.succ(l);
         Pair<?, Integer> p = succ.stream().map(w -> new Pair<>(w, this.miniTwoSolve(w, l)))
-        .reduce(new Pair<>(null, 4 * l.size() * l.size()), (y, z) -> (y.getSnd() < z.getSnd()) ? y : z);
-        p.setSnd(p.getSnd() + x*(x - 1)/2);
+                .reduce(new Pair<>(null, 4 * l.size() * l.size()), (y, z) -> (y.getSnd() < z.getSnd()) ? y : z);
+        p.setSnd(p.getSnd() + x * (x - 1) / 2);
         System.out.println(this.count);
         return p;
     }
 
-    
     public int miniTwoSolve(String word, List<String> ans) {
         int s = ans.size();
         HashMap<Integer, List<String>> h = this.check(word, ans);
-        // This case shouldn't occur as word is either an acceptable answer, or a most splitting word
+        // This case shouldn't occur as word is either an acceptable answer, or a most
+        // splitting word
 
         if (h.size() == 1) {
             return Integer.MAX_VALUE;
-        } 
+        }
 
         if (h.size() == s) {
-            return 2*s*(s - 1)/2;
+            return 2 * s * (s - 1) / 2;
         }
-        return this.solve(h);         
+        return this.solve(h);
     }
 
     public int solve(HashMap<Integer, List<String>> h) {
@@ -130,7 +131,7 @@ public class Dordle extends Wordle {
                     sum += super.solve(h.get(j), 1).getSnd();
                 }
                 // System.out.println(sum);
-                
+
                 // if j == c also LOL
                 sum -= 1;
 
@@ -156,25 +157,26 @@ public class Dordle extends Wordle {
         int xx = ans2.size();
         if (x == 1) {
             String s = ans1.get(0);
-            // the following won't work as miniSolve may give maxvalue if s is non-separating!
+            // the following won't work as miniSolve may give maxvalue if s is
+            // non-separating!
             // return new Pair<>(s, super.miniSolve(s, ans2));
 
             // int z = super.miniSolve(s, ans2);
             // if (z == Integer.MAX_VALUE) {
-            //     Pair<?, Integer> p = super.solve(ans2);
-            //     p.setFst(s); // This line doesn't work!!! 
-            //     p.setSnd(p.getSnd() + xx);
-            //     return p;
+            // Pair<?, Integer> p = super.solve(ans2);
+            // p.setFst(s); // This line doesn't work!!!
+            // p.setSnd(p.getSnd() + xx);
+            // return p;
             // }
-            // return new Pair<>(s, z); 
+            // return new Pair<>(s, z);
 
             HashMap<Integer, List<String>> h = this.check(s, ans2);
             int sum = 0;
             for (int i : h.keySet()) {
                 sum += super.solve(h.get(i), 1).getSnd();
             }
-            return new Pair<>(s, sum + xx); 
-        } 
+            return new Pair<>(s, sum + xx);
+        }
 
         if (xx == 1) {
             String s = ans2.get(0);
@@ -183,7 +185,7 @@ public class Dordle extends Wordle {
             for (int i : h.keySet()) {
                 sum += super.solve(h.get(i), 1).getSnd();
             }
-            return new Pair<>(s, sum + x); 
+            return new Pair<>(s, sum + x);
         }
 
         // happy case, once again
@@ -198,7 +200,7 @@ public class Dordle extends Wordle {
                 } else {
                     t = ans2.get(i - x);
                 }
-                
+
                 HashMap<Integer, List<String>> h1 = super.check(t, ans1);
                 HashMap<Integer, List<String>> h2 = super.check(t, ans2);
                 int y = this.solve(h1, h2);
@@ -207,15 +209,15 @@ public class Dordle extends Wordle {
                     min = y;
                 }
             }
-            if (min <= 2*x*xx) {
-                return new Pair<>(w, min + x*xx);
+            if (min <= 2 * x * xx) {
+                return new Pair<>(w, min + x * xx);
             }
         }
 
         List<String> succ = this.succ(ans1, ans2);
         Pair<?, Integer> p = succ.stream().map(w -> new Pair<>(w, this.miniSolve(w, ans1, ans2))).parallel()
-        .reduce(new Pair<>(null, 6 * ans1.size() * ans2.size()), (y, z) -> (y.getSnd() < z.getSnd()) ? y : z);
-        p.setSnd(p.getSnd() + ans1.size()*ans2.size());
+                .reduce(new Pair<>(null, 6 * ans1.size() * ans2.size()), (y, z) -> (y.getSnd() < z.getSnd()) ? y : z);
+        p.setSnd(p.getSnd() + ans1.size() * ans2.size());
         return p;
     }
 
@@ -226,9 +228,9 @@ public class Dordle extends Wordle {
             return Integer.MAX_VALUE;
         }
         if (h1.size() == ans1.size() && h2.size() == ans2.size()) {
-            return 2*ans1.size()*ans2.size();
+            return 2 * ans1.size() * ans2.size();
         }
-        return this.solve(h1, h2);        
+        return this.solve(h1, h2);
     }
 
     public int solve(HashMap<Integer, List<String>> h1, HashMap<Integer, List<String>> h2) {
@@ -238,7 +240,7 @@ public class Dordle extends Wordle {
                 for (int j : h2.keySet()) {
                     sum += super.solve(h2.get(j), 1).getSnd();
                 }
-                
+
             } else {
                 for (int j : h2.keySet()) {
                     if (j == c) {
@@ -251,7 +253,7 @@ public class Dordle extends Wordle {
         }
         // System.out.println(i + "double");
         return sum;
-    
+
     }
-    
+
 }

@@ -10,18 +10,19 @@ import test.*;
 
 public class Ndle {
     public static void main(String[] args) {
+        System.out.println("Processing power: " + Runtime.getRuntime().availableProcessors());
         new WordleRun().run();
-        
+
         // Path out = Paths.get("output.txt");
-        // List<String> arrayList = new ArrayList<> ( Arrays.asList ( "a" , "b" , "c" ) );
+        // List<String> arrayList = new ArrayList<> ( Arrays.asList ( "a" , "b" , "c" )
+        // );
         // try {
-        //     Files.write(out,arrayList,Charset.defaultCharset());
+        // Files.write(out,arrayList,Charset.defaultCharset());
         // } catch (Exception e) {
-        //     e.printStackTrace();
+        // e.printStackTrace();
         // }
-        
 
         // new DordleRun().run();
-        
+
     }
 }
