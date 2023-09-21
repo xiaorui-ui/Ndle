@@ -2,6 +2,7 @@
 *.class
 
 # Folders
+/.vscode
 /out
 /.idea
 Ndle.iml
